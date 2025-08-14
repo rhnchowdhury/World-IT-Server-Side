@@ -130,6 +130,22 @@ async function run() {
       res.send({ isAdmin: user?.role === "Admin" });
     });
 
+    // developer check
+    app.get("/users/developer/:email", async (req, res) => {
+      const email = req.params.email;
+      const query = { email };
+      const developer = await userCollection.findOne(query);
+      res.send({ isDeveloper: developer?.role === "Developer" });
+    });
+
+    // moderator check
+    app.get("/users/moderator/:email", async (req, res) => {
+      const email = req.params.email;
+      const query = { email };
+      const user = await userCollection.findOne(query);
+      res.send({ isModerator: user?.role === "Moderator" });
+    });
+
     // jwt token create
     app.get("/jwt", async (req, res) => {
       const email = req.query.email;
